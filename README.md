@@ -17,22 +17,8 @@ Web-Dashboard for Py-Experimenter.
 
 The package requires Python 3.10 or higher. We recommend using uv as environment manager, but you can also use anaconda.
 
-```bash
-# Setup uv
-uv venv
-source /.venv/bin/activate
-```
-or 
-```bash
-conda create -n py-experimenter-dash python=3.10
-conda activate py-experimenter-dash
-```
+If you have uv installed, you can create a new environment with:
 
-Then install with uv or pip:
 ```bash
-uv pip install -e .
-```
-or
-```bash
-pip install -e .
+make install
 ```
