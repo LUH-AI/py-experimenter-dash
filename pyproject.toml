@@ -17,6 +17,10 @@ classifiers = [
     "Programming Language :: Python :: 3.13",
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
+dependencies = [
+    "fastapi>=0.118.0",
+    "py-experimenter",
+]
 
 [project.urls]
 Homepage = "https://mwever.github.io/py-experimenter-dash/"
@@ -114,4 +118,7 @@ skip_empty = true
 [tool.coverage.run]
 branch = true
 source = ["src"]
+
+[tool.uv.sources]
+py-experimenter = { git = "https://github.com/tornede/py_experimenter.git" }
 
