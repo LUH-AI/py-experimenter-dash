@@ -20,6 +20,7 @@ classifiers = [
 dependencies = [
     "fastapi>=0.118.0",
     "py-experimenter",
+    "uvicorn>=0.37.0",
 ]
 
 [project.urls]
@@ -121,4 +122,3 @@ source = ["src"]
 
 [tool.uv.sources]
 py-experimenter = { git = "https://github.com/tornede/py_experimenter.git" }
-
