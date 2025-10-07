@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3>Experiment Status Overview</h3>
+
+<div
+  id="counts-panel"
+  hx-get="/counts"
+  hx-trigger="every 5s"
+  hx-swap="outerHTML">
+    {% include "partials/counts.html" %}
+</div>
+
+{% endblock %}

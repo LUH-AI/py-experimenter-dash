@@ -1,0 +1,20 @@
+<div class="card mt-3 shadow-sm">
+  <div class="card-body">
+    <h5 class="card-title">Experiment Counts</h5>
+    <table class="table table-striped mb-0">
+      <thead>
+        <tr>
+          <th>Status</th>
+          <th>Count</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Total</td><td>{{ counts.total }}</td></tr>
+        <tr><td>Open</td><td>{{ counts.open }}</td></tr>
+        <tr><td>Running</td><td>{{ counts.running }}</td></tr>
+        <tr><td>Done</td><td>{{ counts.done }}</td></tr>
+        <tr><td>Error</td><td>{{ counts.error }}</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
