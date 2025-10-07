@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<h3>Recent Errors</h3>
+
+{% if errors %}
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr><th>ID</th><th>Parameters</th><th>Error Message</th></tr>
+      </thead>
+      <tbody>
+        {% for row in errors %}
+          <tr>
+            <td>{{ row.id }}</td>
+            <td>{{ row.parameters }}</td>
+            <td class="text-danger">{{ row.error_message }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% else %}
+  <p>No errors found.</p>
+{% endif %}
+{% endblock %}

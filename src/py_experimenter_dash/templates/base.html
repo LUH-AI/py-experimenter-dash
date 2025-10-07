@@ -2,19 +2,62 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>PyExperimenter Dashboard</title>
     <link href="/static/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
     <script src="/static/htmx.min.js"></script>
+    <script src="/static/chart.js"></script>
 </head>
 
 <body class="bg-light">
-    <nav class="navbar navbar-dark bg-dark mb-4">
-        <div class="container-fluid">
-            <span class="navbar-brand mb-0 h1">PyExperimenter Dashboard</span>
+  <div class="d-flex">
+        <div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary min-vh-100" style="width: 280px;">
+            <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none gap-2">
+                    <img src="/static/py-experimenter-logo.png" style="width: 70px;" />
+                    <span class="fs-4">PyExperimenter Dashboard</span>
+            </a>
+
+            <hr>
+
+            <ul class="nav nav-pills flex-column mb-auto" >
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2 {% if active_page == 'dashboard' %}active{% endif %}" href="/">
+                        <i class="bi bi-speedometer2 me-1"></i>
+                        Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2 {% if active_page == 'errors' %}active{% endif %}" href="/errors">
+                        <i class="bi bi-bug-fill me-1"></i>
+                        Errors
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2 {% if active_page == 'query' %}active{% endif %}" href="/query">
+                        <i class="bi bi-terminal me-1"></i>
+                        Query
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2 {% if active_page == 'carbonfootprint' %}active{% endif %}" href="/carbonfootprint">
+                        <i class="bi bi-cloud-sun-fill me-1"></i>
+                        Carbon Footprint
+                    </a>
+                </li>
+            </ul>
+            <hr>
+            <span style="color: #aaa;" class="mb-2">Powered by</span>
+            <div style="text-align: center;">
+                    <img src="/static/l3s-logo.png" style="width: 100px;" />
+            </div>
+
         </div>
-    </nav>
-    <div class="container">
-        {% block content %}{% endblock %}
+
+        <main class="flex-grow-1 p-4">
+            {% block content %}{% endblock %}
+        </main>
     </div>
+    <script src="/static/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<h3>Custom Queries and Views</h3>
+
+<form method="post" class="mb-3">
+  <div class="input-group">
+    <textarea name="sql_query" class="form-control" placeholder="Enter SQL query...">{{ query }}</textarea>
+    <button class="btn btn-primary" type="submit">Execute</button>
+  </div>
+</form>
+
+{% if error %}
+  <div class="alert alert-danger">Error: {{ error }}</div>
+{% endif %}
+
+{% if rows %}
+  <div class="table-responsive mt-3">
+    <table class="table table-sm table-hover">
+      <thead>
+        <tr>
+          {% for col in columns %}
+            <th>{{ col }}</th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in rows %}
+          <tr>
+            {% for value in row %}
+              <td>{{ value }}</td>
+            {% endfor %}
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endif %}
+{% endblock %}
