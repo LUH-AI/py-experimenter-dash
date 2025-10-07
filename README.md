@@ -28,7 +28,11 @@ conda create -n py-experimenter-dash python=3.10
 conda activate py-experimenter-dash
 ```
 
-Then install with uv:
+Then install with uv or pip:
 ```bash
 uv pip install -e .
+```
+or
+```bash
+pip install -e .
 ```
