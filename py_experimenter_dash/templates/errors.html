@@ -1,26 +1,28 @@
 {% extends "base.html" %}
 {% block content %}
-<h3>Recent Errors</h3>
+<h3 class="mb-3">Recent Errors</h3>
 
 {% if errors %}
-  <div class="table-responsive">
-    <table class="table table-striped">
-      <thead>
-        <tr>
-            <th>Parameters</th>
-            <th>Error Message</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for row in errors %}
-          <tr>
-            <td>{{ row.error }}</td>
-            <td>{{ row.error_count }}</td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
+<table id="errorTable" class="table table-striped">
+  <thead>
+    <tr>
+        <th>Parameters</th>
+        <th>Error Message</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in errors %}
+      <tr>
+        <td>{{ row.error }}</td>
+        <td>{{ row.error_count }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<script>
+new DataTable('#errorTable');
+</script>
 {% else %}
   <p>No errors found.</p>
 {% endif %}

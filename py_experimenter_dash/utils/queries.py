@@ -53,7 +53,7 @@ def create_history_query() -> None:
 
 def get_codecarbon_data() -> pd.DataFrame:
     table_name = py_experimenter.config.database_configuration.table_name
-    codecarbon_table = f"{table_name}__codecarbon"
+    codecarbon_table = f"{table_name}_codecarbon"
     query = f"""
     SELECT
         SUM(cpu_energy_kw) AS cpu_energy_kw,

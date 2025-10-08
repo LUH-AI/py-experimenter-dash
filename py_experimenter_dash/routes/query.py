@@ -2,7 +2,7 @@ from fastapi import APIRouter, Form, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 
-import py_experimenter_dash.utils.queries as q
+from py_experimenter_dash.utils.queries import get_table_structure
 
 templates = Jinja2Templates(directory="py_experimenter_dash/templates")
 router = APIRouter()
@@ -36,9 +36,7 @@ async def get_query_history(request: Request) -> list[str]:
     ]
 
 
-@router.get("/tables")
-async def get_table_info() -> dict:
-    table_info = q.get_table_structure()
-    table_info = table_info.to_dict()
-
-    return table_info
+@router.get("/tables", response_class=HTMLResponse)
+async def get_table_info(request: Request) -> list[dict]:
+    tsdf = get_table_structure()
+    return templates.TemplateResponse("partials/tablepanel.html", {"request": request, "tables": tsdf})

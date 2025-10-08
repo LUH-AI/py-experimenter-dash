@@ -1,55 +1,70 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h3>Carbon Footprint</h3>
+<h3 class="mb-3">Carbon Footprint</h3>
 
-<canvas id="barChart" height="100"></canvas>
 
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    const ctx = document.getElementById('barChart').getContext('2d');
+<div class="row">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Energy Consumption</h4>
+                <canvas id="barChart" height="100"></canvas>
 
-    // Initialize the bar chart
-    window.barChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['Carbon'],
-            datasets: [{
-                label: 'Value',
-                data: [0],
-                backgroundColor: 'rgba(13, 110, 253, 0.5)',
-                borderColor: 'rgba(13, 110, 253, 1)',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            animation: false,
-            scales: {
-                y: { beginAtZero: true}
-            }
-        }
-    });
-});
+                <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    const ctx = document.getElementById('barChart').getContext('2d');
 
-// When HTMX gets new data, update the bar chart
-document.body.addEventListener('htmx:afterOnLoad', function(evt) {
-    if (evt.detail.pathInfo.requestPath === '/carbonstats') {
-        const data = JSON.parse(evt.detail.xhr.responseText);
-        if (window.barChart) {
-            window.barChart.data.labels = data.labels;
-            window.barChart.data.datasets[0].data = data.values;
-            window.barChart.update();
-        }
-    }
-});
-</script>
+                    // Initialize the bar chart
+                    window.barChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: ['CPU', 'GPU', 'RAM'],
+                            datasets: [{
+                                label: 'Energy (kW)',
+                                data: [0],
+                                backgroundColor: 'rgba(13, 110, 253, 0.5)',
+                                borderColor: 'rgba(13, 110, 253, 1)',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            animation: false,
+                            scales: {
+                                y: { beginAtZero: true}
+                            }
+                        }
+                    });
+                });
 
-<!-- Hidden div that htmx uses to trigger fetch -->
-<div
-  hx-get="/carbonstats"
-  hx-trigger="load, every 5s"
-  hx-swap="none">
+                // When HTMX gets new data, update the bar chart
+                document.body.addEventListener('htmx:afterOnLoad', function(evt) {
+                    if (evt.detail.pathInfo.requestPath === '/carbonstats') {
+                        const data = JSON.parse(evt.detail.xhr.responseText);
+                        if (window.barChart) {
+                            window.barChart.data.datasets[0].data = [data.values['cpu_energy_kw'][0], data.values['gpu_energy_kw'][0], data.values['ram_energy_kw'][0]];
+                            window.barChart.update();
+                        }
+                    }
+                });
+                </script>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4"
+        hx-get="/carbonstatspart"
+        hx-trigger="load, every 5s"
+        hx-swap="innerHTML">
+        {% include "partials/carbonstats.html" %}
+    </div>
 </div>
+
+<div
+    hx-get="/carbonstats"
+    hx-trigger="load, every 5s"
+     hx-swap="none"></div>
+<!-- Hidden div that htmx uses to trigger fetch -->
 
 {% endblock %}

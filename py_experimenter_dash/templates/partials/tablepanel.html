@@ -1,0 +1,18 @@
+
+{% for table_name in tables %}
+<div class="col-md-3">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{{ table_name }}</h5>
+            <div style="max-height: 205px; overflow-y: scroll;">
+                  <ul>
+                    {% for column_name in tables[table_name] %}
+                      <li>{{ column_name }} : {{ tables[table_name][column_name] }}</li>
+                    {% endfor %}
+                  </ul>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endfor %}

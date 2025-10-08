@@ -1,8 +1,11 @@
-<div class="card mt-3 shadow-sm">
+<div class="card">
   <div class="card-body">
     <h5 class="card-title">Carbon Footprint Statistics</h5>
-      {{ carbon }}
-
-
+    CPU Energy (kW): {{ data['cpu_energy_kw'][0]|round(5) }} <br>
+    GPU Energy (kW): {{ data['gpu_energy_kw'][0]|round(5) }} <br>
+    RAM Energy (kW): {{ data['ram_energy_kw'][0]|round(5) }} <br>
+    Total Energy (kW): {{ data['energy_consumed_kw'][0]|round(5) }} <br>
+    CO2e Emissions (kg): {{ data['emissions_kg'][0]|round(5) }} <br>
+    Wallclock Time (s): {{ data['duration_seconds'][0]|round(5) }} <br>
   </div>
 </div>
