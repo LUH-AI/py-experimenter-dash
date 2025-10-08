@@ -2,6 +2,8 @@ from fastapi import APIRouter, Form, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 
+import py_experimenter_dash.utils.queries as q
+
 templates = Jinja2Templates(directory="py_experimenter_dash/templates")
 router = APIRouter()
 
@@ -35,5 +37,7 @@ async def get_query_history(request: Request) -> list[str]:
 
 
 @router.get("/tables")
-async def get_table_info(request: Request) -> list[dict]:
-    return [{"ml_comparison": {"ID": "INT", "openml_id": "INT"}}]
+async def get_table_info() -> dict:
+    table_info = q.get_table_structure()
+
+    return table_info
