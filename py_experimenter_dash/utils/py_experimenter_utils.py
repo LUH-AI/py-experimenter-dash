@@ -1,9 +1,11 @@
 # ruff: noqa: S608
+from typing import Optional
 
+from pandas import DataFrame
 from py_experimenter.experimenter import PyExperimenter
 
 
-def get_py_experimenter(database_name: str, table_name: str) -> PyExperimenter:
+def get_py_experimenter(database_name: Optional[str], table_name: Optional[str]) -> PyExperimenter:
     return PyExperimenter(
         experiment_configuration_file_path="config/mock_expdriment.yml",
         database_credential_file_path="config/database_credentials.yml",
@@ -13,7 +15,7 @@ def get_py_experimenter(database_name: str, table_name: str) -> PyExperimenter:
     )
 
 
-def get_experiment_status_overview(database_name: str, table_name: str) -> dict:
+def get_experiment_status_overview(database_name: str, table_name: str) -> DataFrame:
     experimenter = get_py_experimenter(database_name, table_name)
     result = experimenter.execute_custom_query(f"SELECT status, COUNT(*) as count FROM {table_name} GROUP BY status")
     return result

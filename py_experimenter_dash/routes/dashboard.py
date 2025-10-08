@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Request
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.templating import Jinja2Templates
 
-from py_experimenter_dash.db import get_experiment_counts
+from py_experimenter_dash.db import get_experiment_counts, get_table
 
 templates = Jinja2Templates(directory="py_experimenter_dash/templates")
 router = APIRouter()
@@ -21,3 +21,15 @@ async def counts_fragment(request: Request):
     """HTMX endpoint that returns only the updated counts."""
     counts = get_experiment_counts()
     return templates.TemplateResponse("partials/counts.html", {"request": request, "counts": counts})
+
+
+@router.get("/jobs", response_class=JSONResponse)
+async def get_jobs(request: Request):
+    """
+    Returns the table as a json.
+    """
+    table = get_table()
+    table = table.fillna(-1)
+
+    table_dict = table.to_dict()
+    return table_dict
