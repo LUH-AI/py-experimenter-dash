@@ -5,17 +5,13 @@ from fastapi.templating import Jinja2Templates
 templates = Jinja2Templates(directory="py_experimenter_dash/templates")
 router = APIRouter()
 
-carbon = 5
-
 
 @router.get("/carbonstats", response_class=JSONResponse)
 async def carbonstats(request: Request):
     """Render query form."""
-    global carbon
-    carbon += 5
-    labels = ["Carbon", "Static"]
-    values = [carbon, 5]
-
+    # values = get_codecarbon_data()
+    values = ""
+    labels = ""
     return {"labels": labels, "values": values}
 
 

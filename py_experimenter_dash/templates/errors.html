@@ -6,14 +6,16 @@
   <div class="table-responsive">
     <table class="table table-striped">
       <thead>
-        <tr><th>ID</th><th>Parameters</th><th>Error Message</th></tr>
+        <tr>
+            <th>Parameters</th>
+            <th>Error Message</th>
+        </tr>
       </thead>
       <tbody>
         {% for row in errors %}
           <tr>
-            <td>{{ row.id }}</td>
-            <td>{{ row.parameters }}</td>
-            <td class="text-danger">{{ row.error_message }}</td>
+            <td>{{ row.error }}</td>
+            <td>{{ row.error_count }}</td>
           </tr>
         {% endfor %}
       </tbody>

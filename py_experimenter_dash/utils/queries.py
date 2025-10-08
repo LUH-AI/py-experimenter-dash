@@ -14,11 +14,6 @@ def get_table_snapshot(table_name: str, limit: int) -> pd.DataFrame:
     return py_experimenter.execute_custom_query(f"SELECT * FROM {table_name} LIMIT {limit};")
 
 
-def get_experiment_counts():
-    """Return counts of experiments by status."""
-    return py_experimenter.execute_custom_query("SELECT status, COUNT(*) FROM ml_comparison GROUP BY status")
-
-
 def get_status_overview() -> pd.DataFrame:
     table_name = py_experimenter.config.database_configuration.table_name
     query = (
@@ -26,7 +21,7 @@ def get_status_overview() -> pd.DataFrame:
         f" FROM {table_name}"
         " GROUP BY status"
         " UNION ALL"
-        " SELECT 'Total' AS status, COUNT(*) AS count"
+        " SELECT 'total' AS status, COUNT(*) AS count"
         f" FROM {table_name};"
     )
 
@@ -73,7 +68,7 @@ def get_codecarbon_data() -> pd.DataFrame:
     return py_experimenter.execute_custom_query(query)
 
 
-def get_table_structure() -> dict:
+def get_table_structure() -> pd.DataFrame:
     if py_experimenter.config.database_configuration.provider != "mysql":
         raise NotImplementedError("get_table_structure is only implemented for MySQL databases.")
     table_name = py_experimenter.config.database_configuration.table_name
