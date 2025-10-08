@@ -23,3 +23,17 @@ async def run_query(request: Request, sql_query: str = Form(...)):
         "query.html",
         {"request": request, "table": table, "query": sql_query, "error": error, "active_page": "query"},
     )
+
+
+@router.get("/queries")
+async def get_query_history(request: Request) -> list[str]:
+    return [
+        "select * from table",
+        "select field from table",
+        "select field from table where field=value",
+    ]
+
+
+@router.get("/tables")
+async def get_table_info(request: Request) -> list[dict]:
+    return [{"ml_comparison": {"ID": "INT", "openml_id": "INT"}}]
