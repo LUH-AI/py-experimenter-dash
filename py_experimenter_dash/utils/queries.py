@@ -57,6 +57,52 @@ def create_history_query(py_experimenter: PyExperimenter) -> None:
     py_experimenter.execute_custom_query(query)
 
 
+def get_codecarbon_data(py_experimenter) -> pd.DataFrame:
+    table_name = py_experimenter.config.database_configuration.table_name
+    codecarbon_table = f"{table_name}__codecarbon"
+    query = f"""
+    SELECT
+        SUM(cpu_energy_kw) AS cpu_energy_kw,
+        SUM(gpu_energy_kw) AS gpu_energy_kw,
+        SUM(ram_energy_kw) AS ram_energy_kw,
+        SUM(emissions_kg) AS emissions_kg,
+        SUM(duration_seconds) AS duration_seconds,
+        SUM(energy_consumed_kw) AS energy_consumed_kw
+    FROM {codecarbon_table}
+    LIMIT 100
+    """
+    return py_experimenter.execute_custom_query(query)
+
+
+def get_table_structure(py_experimenter: PyExperimenter) -> pd.DataFrame:
+    if py_experimenter.config.database_configuration.provider != "mysql":
+        raise NotImplementedError("get_table_structure is only implemented for MySQL databases.")
+    table_name = py_experimenter.config.database_configuration.table_name
+    # Get all tables that start with the table name
+    query = f"""
+    SELECT table_name
+    FROM information_schema.tables
+    WHERE table_schema = DATABASE()
+    AND table_name LIKE '{table_name}%';
+    """
+
+    tables = py_experimenter.execute_custom_query(query)
+
+    # For each table, get the columns and their types
+    table_structure = {}
+    for _, row in tables.iterrows():
+        table = row["table_name"]
+        table_structure[table] = {}
+        query = f"DESCRIBE {table};"
+        columns = py_experimenter.execute_custom_query(query)
+        col_types = {}
+        for _, col in columns.iterrows():
+            col_types[col["Field"]] = col["Type"]
+        table_structure[table] = col_types
+
+    return table_structure
+
+
 def add_query_to_history(py_experimenter: PyExperimenter, query: str) -> None:
     # Check if the query already exists in the history table
     query_check = f"SELECT id, query_count FROM query_history WHERE query = {query};"
