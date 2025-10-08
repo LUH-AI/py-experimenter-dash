@@ -1,17 +1,24 @@
-from fastapi import FastAPI
-from fastapi.staticfiles import StaticFiles
-from fastapi.templating import Jinja2Templates
+# py_experimenter_dash/main.py
+import argparse
+import os
 
-from py_experimenter_dash.routes import carbon_footprint, dashboard, error_page, query
-
-app = FastAPI()
+import uvicorn
 
 
-# --- Setup ---
-templates = Jinja2Templates(directory="py_experimenter_dash/templates")
-app.mount("/static", StaticFiles(directory="py_experimenter_dash/static"), name="static")
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--experiment_configuration_file_path", required=True)
+    parser.add_argument("--database_credentials_file_path", required=True)
+    parser.add_argument("--port", type=int, default=8000)
+    args = parser.parse_args()
 
-app.include_router(dashboard.router)
-app.include_router(error_page.router)
-app.include_router(query.router)
-app.include_router(carbon_footprint.router)
+    # Pass the arguments via environment variables (used by asgi.py)
+    os.environ["EXPERIMENT_CONFIG_FILE_PATH"] = args.experiment_configuration_file_path
+    os.environ["DB_CREDENTIALS_FILE_PATH"] = args.database_credentials_file_path
+
+    # Run using import string so reload works properly
+    uvicorn.run("py_experimenter_dash.asgi:app", host="127.0.0.1", port=args.port, reload=True)
+
+
+if __name__ == "__main__":
+    main()
