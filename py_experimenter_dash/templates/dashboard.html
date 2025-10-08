@@ -11,4 +11,11 @@
     {% include "partials/counts.html" %}
 </div>
 
+<div
+  id=""
+  hx-get="/jobs"
+  hx-trigger="load, every 5s"
+  hx-swap="innerHTML">
+</div>
+
 {% endblock %}
