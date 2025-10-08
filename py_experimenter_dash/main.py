@@ -6,6 +6,7 @@ from py_experimenter_dash.routes import carbon_footprint, dashboard, error_page,
 
 app = FastAPI()
 
+
 # --- Setup ---
 templates = Jinja2Templates(directory="py_experimenter_dash/templates")
 app.mount("/static", StaticFiles(directory="py_experimenter_dash/static"), name="static")

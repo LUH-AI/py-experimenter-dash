@@ -3,6 +3,8 @@ install: ## Install the virtual environment and install the pre-commit hooks
 	@echo "🚀 Creating virtual environment using uv"
 	@uv sync
 	@uv run pre-commit install
+	@uv pip install git+https://github.com/tornede/py_experimenter.git@217-custom-query --upgrade
+
 
 .PHONY: check
 check: ## Run code quality tools.

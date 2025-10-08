@@ -1,0 +1,24 @@
+PY_EXPERIMENTER:
+  n_jobs : 1
+
+  Database:
+    provider: mysql
+    database: pyexp_dash
+    table:
+      name: ml_comparison
+      keyfields:
+        openml_id:
+          type: int
+          values: [31,10101,3913,3,3917,9957,9946,3918,3903,37]
+        seed:
+          type: int
+          values: [0,1,2,3,4,5,6,7,8,9]
+        learner:
+          type: VARCHAR(255)
+          values: ['rf', 'xgboost', 'svm', 'lr', 'mlp', 'tabpfn', 'dt']
+      result_timestamps: false
+      resultfields:
+        accuracy: DOUBLE
+        traintime: INT
+        testtime: INT
+        done: VARCHAR(50)
