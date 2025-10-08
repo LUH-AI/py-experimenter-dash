@@ -39,5 +39,6 @@ async def get_query_history(request: Request) -> list[str]:
 @router.get("/tables")
 async def get_table_info() -> dict:
     table_info = q.get_table_structure()
+    table_info = table_info.to_dict()
 
     return table_info
