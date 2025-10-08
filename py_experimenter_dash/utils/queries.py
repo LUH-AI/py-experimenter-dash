@@ -3,7 +3,6 @@ import pandas as pd
 
 from py_experimenter_dash.utils.py_experimenter_utils import get_py_experimenter
 
-global py_experimenter
 py_experimenter = get_py_experimenter(None, None)
 
 
