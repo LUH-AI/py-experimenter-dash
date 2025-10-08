@@ -1,0 +1,22 @@
+<table id="jobsTable">
+    <thead>
+        <tr>
+            {% for key in keys %}
+                <th>{{ key }}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in table %}
+            <tr style="{% if item['status'] == 'done' %}background: #dfd;{% endif %}{% if item['status'] == 'running' %}background: #ddf;{% endif %}">
+                {% for key in keys %}
+                <td>{{ item[key] }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<script>
+new DataTable('#jobsTable');
+</script>
