@@ -2,7 +2,7 @@ from fastapi import APIRouter, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 
-from py_experimenter_dash.db import get_experiment_counts
+from py_experimenter_dash.utils.queries import get_status_overview
 
 templates = Jinja2Templates(directory="py_experimenter_dash/templates")
 router = APIRouter()
@@ -10,7 +10,7 @@ router = APIRouter()
 
 @router.get("/", response_class=HTMLResponse)
 async def get_dashboard(request: Request):
-    counts_df = get_experiment_counts()
+    counts_df = get_status_overview()
     counts = dict(zip(counts_df["status"], counts_df["COUNT(*)"]))
     total = sum(counts.values())
     counts["total"] = total
@@ -27,7 +27,7 @@ async def get_dashboard(request: Request):
 @router.get("/counts", response_class=HTMLResponse)
 async def counts_fragment(request: Request):
     """HTMX endpoint that returns only the updated counts."""
-    counts_df = get_experiment_counts()
+    counts_df = get_status_overview()
     counts = dict(zip(counts_df["status"], counts_df["COUNT(*)"]))
     total = sum(counts.values())
     counts["total"] = total

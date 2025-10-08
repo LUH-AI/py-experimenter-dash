@@ -1,17 +1,21 @@
 # ruff: noqa: S608
 import pandas as pd
-from py_experimenter.experimenter import PyExperimenter
+
+from py_experimenter_dash.utils.py_experimenter_utils import get_py_experimenter
+
+global py_experimenter
+py_experimenter = get_py_experimenter(None, None)
 
 
-def get_table(py_experimenter: PyExperimenter) -> pd.DataFrame:
+def get_table() -> pd.DataFrame:
     return py_experimenter.get_table()
 
 
-def get_table_snapshot(py_experimenter: PyExperimenter, table_name: str, limit: int) -> pd.DataFrame:
+def get_table_snapshot(table_name: str, limit: int) -> pd.DataFrame:
     return py_experimenter.execute_custom_query(f"SELECT * FROM {table_name} LIMIT {limit};")
 
 
-def get_status_overview(py_experimenter: PyExperimenter) -> pd.DataFrame:
+def get_status_overview() -> pd.DataFrame:
     table_name = py_experimenter.config.database_configuration.table_name
     query = (
         "SELECT status, COUNT(*) AS count"
@@ -25,7 +29,7 @@ def get_status_overview(py_experimenter: PyExperimenter) -> pd.DataFrame:
     return py_experimenter.execute_custom_query(query)
 
 
-def get_errors(py_experimenter: PyExperimenter) -> pd.DataFrame:
+def get_errors() -> pd.DataFrame:
     table_name = py_experimenter.config.database_configuration.table_name
     query = (
         f"SELECT DISTINCT(error), COUNT(*) as error_count FROM {table_name} GROUP BY error ORDER BY error_count DESC;"
@@ -34,7 +38,7 @@ def get_errors(py_experimenter: PyExperimenter) -> pd.DataFrame:
     return py_experimenter.execute_custom_query(query)
 
 
-def create_history_query(py_experimenter: PyExperimenter) -> None:
+def create_history_query() -> None:
     # SQLite schema: track first and most recent time we saw a query
     query = """
     CREATE TABLE IF NOT EXISTS query_history (
@@ -48,7 +52,7 @@ def create_history_query(py_experimenter: PyExperimenter) -> None:
     py_experimenter.execute_custom_query(query)
 
 
-def get_codecarbon_data(py_experimenter) -> pd.DataFrame:
+def get_codecarbon_data() -> pd.DataFrame:
     table_name = py_experimenter.config.database_configuration.table_name
     codecarbon_table = f"{table_name}__codecarbon"
     query = f"""
@@ -65,7 +69,7 @@ def get_codecarbon_data(py_experimenter) -> pd.DataFrame:
     return py_experimenter.execute_custom_query(query)
 
 
-def get_table_structure(py_experimenter: PyExperimenter) -> pd.DataFrame:
+def get_table_structure() -> pd.DataFrame:
     if py_experimenter.config.database_configuration.provider != "mysql":
         raise NotImplementedError("get_table_structure is only implemented for MySQL databases.")
     table_name = py_experimenter.config.database_configuration.table_name
@@ -94,7 +98,7 @@ def get_table_structure(py_experimenter: PyExperimenter) -> pd.DataFrame:
     return table_structure
 
 
-def add_query_to_history(py_experimenter: PyExperimenter, query: str) -> None:
+def add_query_to_history(query: str) -> None:
     # Check if the query already exists in the history table
     query_check = f"SELECT id, query_count FROM query_history WHERE query = {query};"
     result = py_experimenter.execute_custom_query(query_check)
@@ -118,7 +122,7 @@ def add_query_to_history(py_experimenter: PyExperimenter, query: str) -> None:
     py_experimenter.execute_custom_query(query_upsert)
 
 
-def get_query_history(py_experimenter: PyExperimenter) -> pd.DataFrame:
+def get_query_history() -> pd.DataFrame:
     query = """
         SELECT query, query_count, first_timestamp, last_timestamp
         FROM query_history

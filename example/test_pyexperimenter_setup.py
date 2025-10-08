@@ -3,6 +3,8 @@ from time import sleep
 
 from py_experimenter.experimenter import PyExperimenter
 
+from py_experimenter_dash.utils.queries import get_table_structure
+
 produce_errors = True
 
 
@@ -29,6 +31,7 @@ pyexp = PyExperimenter(
     database_credential_file_path="config/database_credentials.yml",
     use_codecarbon=False,
 )
-pyexp.fill_table_from_config()
-pyexp.execute(run_experiment, max_experiments=10)
-pyexp.execute(run_error_experiment, max_experiments=10)
+print(get_table_structure(pyexp))
+# pyexp.fill_table_from_config()
+# pyexp.execute(run_experiment, max_experiments=10)
+# pyexp.execute(run_error_experiment, max_experiments=10)
