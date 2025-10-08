@@ -28,8 +28,13 @@ async def get_jobs(request: Request):
     """
     Returns the table as a json.
     """
-    table = get_table()
-    table = table.fillna(-1)
 
-    table_dict = table.to_dict()
-    return table_dict
+    table = get_table()
+    table = table.fillna(-1).to_dict()
+    table_keys = table.keys()
+    table_len = len(table[next(iter(table_keys))])
+    table = [{k: table[k][i] for k in table_keys} for i in range(table_len)]
+
+    table = sorted(table, key=lambda x: x["creation_date"], reverse=True)
+
+    return table
