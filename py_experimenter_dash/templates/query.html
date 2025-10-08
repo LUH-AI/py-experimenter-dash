@@ -1,13 +1,90 @@
 {% extends "base.html" %}
 {% block content %}
+
+<div style="float:right;">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      History of Queries
+    </button>
+</div>
 <h3>Custom Queries and Views</h3>
 
-<form method="post" class="mb-3">
-  <div class="input-group">
-    <textarea name="sql_query" class="form-control" placeholder="Enter SQL query...">{{ query }}</textarea>
-    <button class="btn btn-primary" type="submit">Execute</button>
+<div class="row mb-3">
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title">ExperimentTableName</div>
+                <div>ID: INT</div>
+                <div>Col1: INT</div>
+                <div>Col2: VARCHAR</div>
+                <div>Col3: TEXT</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title">LoggingTableName</div>
+                <div>ID: INT</div>
+                <div>experiment_id: INT</div>
+                <div>Col1: INT</div>
+                <div>Col2: VARCHAR</div>
+                <div>Col3: TEXT</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+    </div>
+
+</div>
+
+
+<div class="modal" id="exampleModal" tabindex="-1">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">History of Queries</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h4></h4>
+        <div class="row">
+            <div class="input-group">
+                <textarea name="sql_query" class="form-control" disabled>SELECT * FROM LoggingTableName JOIN ExperimentTableName ON LoggingTableName.experiment_id</textarea>
+
+                <button class="btn btn-primary" type="submit">Re-Execute</button>
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
   </div>
-</form>
+</div>
+
+
+<div class="row">
+    <form method="post" class="mb-3">
+      <div class="input-group">
+        <textarea name="sql_query" class="form-control" placeholder="Enter SQL query...">{{ query }}</textarea>
+        <button class="btn btn-primary" type="submit">Execute</button>
+      </div>
+    </form>
+</div>
+
+<div class="row">
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Value</th>
+        </tr>
+    </table>
+</div>
+
+<div class="row">
+</div>
 
 {% if error %}
   <div class="alert alert-danger">Error: {{ error }}</div>

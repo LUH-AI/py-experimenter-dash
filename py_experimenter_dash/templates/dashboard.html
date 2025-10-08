@@ -3,13 +3,22 @@
 
 <h3>Experiment Status Overview</h3>
 
+<div class="mb-3">
 <div
   id="counts-panel"
   hx-get="/counts"
-  hx-trigger="load, every 5s"
+  hx-trigger="load, every 1s"
   hx-swap="innerHTML">
     {% include "partials/counts.html" %}
 </div>
+</div>
 
+
+<div id="exp_conf"
+hx-get="/experiment_setup"
+hx-trigger="load"
+hx-swap="innerHTML">
+    {% include "partials/experiment_setup.html" %}
+</div>
 
 {% endblock %}

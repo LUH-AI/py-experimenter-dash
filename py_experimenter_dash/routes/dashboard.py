@@ -1,3 +1,5 @@
+import os
+
 from fastapi import APIRouter, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
@@ -22,6 +24,15 @@ async def get_dashboard(request: Request):
     return templates.TemplateResponse(
         "dashboard.html", {"request": request, "counts": counts, "active_page": "dashboard"}
     )
+
+
+@router.get("/experiment_setup", response_class=HTMLResponse)
+async def experiment_setup(request: Request):
+    """HTMX endpoint that returns only the updated counts."""
+    file_path = os.getenv("EXPERIMENT_CONFIG_FILE_PATH", os.path.join("config", "experiment_configuration.yml"))
+    with open(file_path) as f:
+        file = f.read()
+    return templates.TemplateResponse("partials/experiment_setup.html", {"request": request, "file": file})
 
 
 @router.get("/counts", response_class=HTMLResponse)
