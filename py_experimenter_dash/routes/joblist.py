@@ -2,7 +2,7 @@ from fastapi import APIRouter, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 
-from py_experimenter_dash.db import get_table
+from py_experimenter_dash.utils.queries import get_table
 
 templates = Jinja2Templates(directory="py_experimenter_dash/templates")
 router = APIRouter()

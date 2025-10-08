@@ -2,13 +2,22 @@
 import pandas as pd
 from py_experimenter.experimenter import PyExperimenter
 
+from py_experimenter_dash.utils.py_experimenter_utils import get_py_experimenter
 
-def get_table(py_experimenter: PyExperimenter) -> pd.DataFrame:
+py_experimenter = get_py_experimenter(None, None)
+
+
+def get_table() -> pd.DataFrame:
     return py_experimenter.get_table()
 
 
-def get_table_snapshot(py_experimenter: PyExperimenter, table_name: str, limit: int) -> pd.DataFrame:
+def get_table_snapshot(table_name: str, limit: int) -> pd.DataFrame:
     return py_experimenter.execute_custom_query(f"SELECT * FROM {table_name} LIMIT {limit};")
+
+
+def get_experiment_counts():
+    """Return counts of experiments by status."""
+    return py_experimenter.execute_custom_query("SELECT status, COUNT(*) FROM ml_comparison GROUP BY status")
 
 
 def get_status_overview(py_experimenter: PyExperimenter) -> pd.DataFrame:
