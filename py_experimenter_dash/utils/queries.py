@@ -3,8 +3,12 @@ import pandas as pd
 from py_experimenter.experimenter import PyExperimenter
 
 
-def get_table_snapchot(py_experimenter: PyExperimenter) -> pd.DataFrame:
-    return py_experimenter.get_table(condition="")
+def get_table(py_experimenter: PyExperimenter) -> pd.DataFrame:
+    return py_experimenter.get_table()
+
+
+def get_table_snapshot(py_experimenter: PyExperimenter, table_name: str, limit: int) -> pd.DataFrame:
+    return py_experimenter.execute_custom_query(f"SELECT * FROM {table_name} LIMIT {limit};")
 
 
 def get_status_overview(py_experimenter: PyExperimenter) -> pd.DataFrame:
@@ -45,18 +49,27 @@ def create_history_query(py_experimenter: PyExperimenter) -> None:
 
 
 def add_query_to_history(py_experimenter: PyExperimenter, query: str) -> None:
-    """
-    Inserts a new query (count=1, timestamps now) or, if it exists,
-    increments count and updates last_timestamp.
-    """
-    query_upsert = """
-        INSERT INTO query_history (query)
-        VALUES (?)
-        ON CONFLICT(query) DO UPDATE SET
-            query_count = query_history.query_count + 1,
-            last_timestamp = CURRENT_TIMESTAMP;
-    """
-    py_experimenter.execute_custom_query(query_upsert, (query,))
+    # Check if the query already exists in the history table
+    query_check = f"SELECT id, query_count FROM query_history WHERE query = {query};"
+    result = py_experimenter.execute_custom_query(query_check)
+    if result.empty:
+        # If the query does not exist, insert it
+        query_upsert = f"""
+            INSERT INTO query_history (query)
+            VALUES ({query})
+            ON CONFLICT(query) DO UPDATE SET
+                query_count = query_history.query_count + 1,
+                last_timestamp = CURRENT_TIMESTAMP;
+        """
+    else:
+        # If the query exists, update the count and timestamp
+        query_upsert = f"""
+            UPDATE query_history
+            SET query_count = query_count + 1,
+                last_timestamp = CURRENT_TIMESTAMP
+            WHERE query = {query};
+        """
+    py_experimenter.execute_custom_query(query_upsert)
 
 
 def get_query_history(py_experimenter: PyExperimenter) -> pd.DataFrame:
