@@ -1,11 +1,15 @@
-.color-done {
-    color: darkolivegreen
+.color-default {
+    background: #fff
 }
 
-.color-error {
-    color: darkred
+.color-done {
+    background: #dfd
 }
 
 .color-running {
-    color: darkblue
+    background: #ddf
+}
+
+.color-error {
+    background: #fdd
 }

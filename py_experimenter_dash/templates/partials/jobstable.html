@@ -8,9 +8,15 @@
     </thead>
     <tbody>
         {% for item in table %}
-            <tr style="{% if item['status'] == 'done' %}background: #dfd;{% endif %}{% if item['status'] == 'running' %}background: #ddf;{% endif %}">
+            <tr>
                 {% for key in keys %}
-                <td>{{ item[key] }}</td>
+                <td class="
+            {% if item['status'] == 'done' %}color-done
+            {% elif item['status'] == 'running' %}color-running
+            {% elif item['status'] == 'error' %}color-error
+            {% else %}color-default
+            {% endif %}
+            ">{{ item[key] }}</td>
                 {% endfor %}
             </tr>
         {% endfor %}
