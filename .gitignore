@@ -1,5 +1,5 @@
 docs/source
-config/
+**/database_credentials.yml
 
 # From https://raw.githubusercontent.com/github/gitignore/main/Python.gitignore
 
@@ -212,6 +212,6 @@ marimo/_lsp/
 __marimo__/
 .idea
 
-tests/database_connection.yml
+config/database_credentials.yml
 .vscode/settings.json
 config/database_credentials.yml

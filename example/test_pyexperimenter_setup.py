@@ -26,7 +26,7 @@ def run_error_experiment(config, result_processor, custom_config):
 
 pyexp = PyExperimenter(
     experiment_configuration_file_path="experiment_config.yml",
-    database_credential_file_path="database_connection.yml",
+    database_credential_file_path="../config/database_credentials.yml",
     use_codecarbon=False,
 )
 pyexp.fill_table_from_config()

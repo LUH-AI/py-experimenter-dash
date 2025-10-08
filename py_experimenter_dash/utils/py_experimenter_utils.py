@@ -1,4 +1,5 @@
 # ruff: noqa: S608
+import os
 from typing import Optional
 
 from pandas import DataFrame
@@ -7,8 +8,12 @@ from py_experimenter.experimenter import PyExperimenter
 
 def get_py_experimenter(database_name: Optional[str], table_name: Optional[str]) -> PyExperimenter:
     return PyExperimenter(
-        experiment_configuration_file_path="config/mock_expdriment.yml",
-        database_credential_file_path="config/database_credentials.yml",
+        experiment_configuration_file_path=os.getenv(
+            "EXPERIMENT_CONFIG_FILE_PATH", os.path.join("config", "experiment_configuration.yml")
+        ),
+        database_credential_file_path=os.getenv(
+            "DB_CREDENTIALS_FILE_PATH", os.path.join("config", "database_credentials.yml")
+        ),
         database_name=database_name,
         table_name=table_name,
         use_codecarbon=False,
