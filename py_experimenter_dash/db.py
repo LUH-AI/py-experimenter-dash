@@ -1,3 +1,5 @@
+from py_experimenter_dash.utils.py_experimenter_utils import get_py_experimenter
+
 created = 90
 
 
@@ -13,3 +15,7 @@ def get_experiment_counts():
         "done": 4 + (100 - created - 9),
         "error": 5,
     }
+
+
+global py_experimenter
+py_experimenter = get_py_experimenter(None, None)
