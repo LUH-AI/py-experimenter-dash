@@ -215,3 +215,4 @@ __marimo__/
 uv.lock
 
 tests/database_connection.yml
+.vscode/settings.json
