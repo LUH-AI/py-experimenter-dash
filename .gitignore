@@ -214,4 +214,4 @@ __marimo__/
 # uv
 uv.lock
 
-database_connection.yml
+tests/database_connection.yml
