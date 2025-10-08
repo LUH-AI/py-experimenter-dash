@@ -211,9 +211,6 @@ marimo/_lsp/
 __marimo__/
 .idea
 
-# uv
-uv.lock
-
 tests/database_connection.yml
 .vscode/settings.json
 config/database_credentials.yml
