@@ -19,3 +19,5 @@ def get_experiment_counts():
 
 global py_experimenter
 py_experimenter = get_py_experimenter(None, None)
+
+py_experimenter.execute_custom_query("SELECT status, COUNT(*) FROM ml_comparison GROUP BY status")
