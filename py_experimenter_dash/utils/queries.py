@@ -21,7 +21,7 @@ def get_status_overview() -> pd.DataFrame:
         f" FROM {table_name}"
         " GROUP BY status"
         " UNION ALL"
-        " SELECT 'Total' AS status, COUNT(*) AS count"
+        " SELECT 'total' AS status, COUNT(*) AS count"
         f" FROM {table_name};"
     )
 

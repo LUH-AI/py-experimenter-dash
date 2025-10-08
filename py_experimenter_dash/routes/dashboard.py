@@ -13,9 +13,7 @@ router = APIRouter()
 @router.get("/", response_class=HTMLResponse)
 async def get_dashboard(request: Request):
     counts_df = get_status_overview()
-    counts = dict(zip(counts_df["status"], counts_df["COUNT(*)"]))
-    total = sum(counts.values())
-    counts["total"] = total
+    counts = dict(zip(counts_df["status"], counts_df["count"]))
 
     status_keys = ["running", "created", "error", "done"]
     for status_key in status_keys:
@@ -39,9 +37,7 @@ async def experiment_setup(request: Request):
 async def counts_fragment(request: Request):
     """HTMX endpoint that returns only the updated counts."""
     counts_df = get_status_overview()
-    counts = dict(zip(counts_df["status"], counts_df["COUNT(*)"]))
-    total = sum(counts.values())
-    counts["total"] = total
+    counts = dict(zip(counts_df["status"], counts_df["count"]))
 
     status_keys = ["running", "created", "error", "done"]
     for status_key in status_keys:

@@ -16,7 +16,7 @@ router = APIRouter()
 @router.get("/errors", response_class=HTMLResponse)
 async def errors_page(request: Request):
     """Show a summary of errored experiments (e.g., last 20)."""
-    errors_df = get_errors(py_experimenter)
+    errors_df = get_errors()
     errors = errors_df.to_dict(orient="records")
     res = []
     if len(errors) == 1 and errors[0]["error"] == "None":
