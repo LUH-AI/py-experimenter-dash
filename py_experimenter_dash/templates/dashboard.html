@@ -6,8 +6,8 @@
 <div
   id="counts-panel"
   hx-get="/counts"
-  hx-trigger="every 5s"
-  hx-swap="outerHTML">
+  hx-trigger="load, every 5s"
+  hx-swap="innerHTML">
     {% include "partials/counts.html" %}
 </div>
 
