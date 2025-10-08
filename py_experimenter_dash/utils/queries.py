@@ -56,7 +56,7 @@ def add_query_to_history(py_experimenter: PyExperimenter, query: str) -> None:
             query_count = query_history.query_count + 1,
             last_timestamp = CURRENT_TIMESTAMP;
     """
-    py_experimenter.execute_custom_query(query_upsert, (query,))
+    py_experimenter.execute_custom_query(query_upsert)
 
 
 def get_query_history(py_experimenter: PyExperimenter) -> pd.DataFrame:
