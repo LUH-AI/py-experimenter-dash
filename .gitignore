@@ -215,3 +215,4 @@ __marimo__/
 config/database_credentials.yml
 .vscode/settings.json
 config/database_credentials.yml
+pyexp_dash.db
